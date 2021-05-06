@@ -12,21 +12,33 @@ export default styles=ScaledSheet.create({
         borderRadius:"8@ms",
         padding:"12@ms",
         marginTop:"16@vs",
-        flexDirection:"column",
+        flexDirection:"row",
         justifyContent:"space-between",
+        flexWrap:"wrap",
+    },
+    buttonContainer:{
+        backgroundColor:"#222629",
+        height:"144@vs",
+        width:"144@vs",
+        borderRadius:"8@vs",
+        padding:"8@vs",
+        marginTop:"16@vs"
+    },
+    title:{
+        fontSize:20,
+        fontWeight:"bold",
+        textAlign:"center",
+        color:"white"
     },
     row:{
         flexDirection:"row",
-        justifyContent:"space-between",
+        justifyContent:"space-around",
         marginTop:"12@vs",
     },
-    title:{
-        fontSize:24,
-        fontWeight:"bold",
-        textAlign:"center"
-    },
+    
     text:{
         fontSize:20,
-        alignSelf:"center"
+        alignSelf:"center",
+        color:"white"
     },
 })
