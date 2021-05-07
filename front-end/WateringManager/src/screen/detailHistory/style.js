@@ -7,26 +7,23 @@ export default styles=ScaledSheet.create({
         paddingHorizontal:"16@ms",
         paddingVertical:"16@vs"
     },
-    picker:{
-        backgroundColor:"white",
-        borderRadius:"8@vs"
-    },
     panel:{
         backgroundColor:"#C4C4C4",
         borderRadius:"8@ms",
         padding:"12@ms",
         marginTop:"16@vs",
-        flexDirection:"row",
+        flexDirection:"column",
         justifyContent:"space-between",
         flexWrap:"wrap",
     },
     buttonContainer:{
         backgroundColor:"#222629",
-        height:"144@vs",
-        width:"144@vs",
+        width:"320@ms",
         borderRadius:"8@vs",
-        padding:"8@vs",
-        marginTop:"24@vs"
+        padding:"16@vs",
+        marginTop:"24@vs",
+        flexDirection:"row",
+        justifyContent:"space-between"
     },
     title:{
         fontSize:20,
@@ -37,7 +34,6 @@ export default styles=ScaledSheet.create({
     row:{
         flexDirection:"row",
         justifyContent:"space-around",
-        marginTop:"12@vs",
     },
     
     text:{

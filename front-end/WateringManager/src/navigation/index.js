@@ -12,6 +12,7 @@ const {
     Register,
     Home,
     History,
+    DetailHistory,
     Config,
     Profile
 }=Screens;
@@ -27,6 +28,18 @@ const Auth=()=>
          <Stack.Screen
             name={"Register"}
             component={Register}
+        />
+    </Stack.Navigator>
+const HistoryNav=()=>
+    <Stack.Navigator>
+        <Stack.Screen
+            name={"History"}
+            component={History}
+        />
+         <Stack.Screen
+            name={"DetailHistory"}
+            component={DetailHistory}
+            
         />
     </Stack.Navigator>
 const BottomTab=()=>
@@ -46,8 +59,8 @@ const BottomTab=()=>
             }}
         />
         <Tab.Screen
-            name={"History"}
-            component={History}
+            name={"HistoryNav"}
+            children={HistoryNav}
             options={{
                 tabBarLabel:"History",
                 tabBarIcon:({focused})=>
