@@ -14,19 +14,31 @@ export default styles=ScaledSheet.create({
         marginTop:"16@vs",
         flexDirection:"column",
         justifyContent:"space-between",
+        flexWrap:"wrap",
+    },
+    buttonContainer:{
+        backgroundColor:"#222629",
+        width:"320@ms",
+        borderRadius:"8@vs",
+        padding:"16@vs",
+        marginTop:"24@vs",
+        flexDirection:"row",
+        justifyContent:"space-between"
+    },
+    title:{
+        fontSize:20,
+        fontWeight:"bold",
+        textAlign:"center",
+        color:"white"
     },
     row:{
         flexDirection:"row",
-        justifyContent:"space-between",
-        marginTop:"12@vs",
+        justifyContent:"space-around",
     },
-    title:{
-        fontSize:24,
-        fontWeight:"bold",
-        textAlign:"center"
-    },
+    
     text:{
         fontSize:20,
-        alignSelf:"center"
+        alignSelf:"center",
+        color:"white"
     },
 })
