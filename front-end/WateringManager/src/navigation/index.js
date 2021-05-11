@@ -1,5 +1,5 @@
 import React from 'react'
-import {createStackNavigator} from '@react-navigation/stack'
+import {createStackNavigator, CardStyleInterpolators} from '@react-navigation/stack'
 import {NavigationContainer} from '@react-navigation/native'
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
 import {Screens} from '../screen'
@@ -19,17 +19,28 @@ const {
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const Auth=()=>
-    <Stack.Navigator
-        initialRouteName={"Login"}>
+    <Stack.Navigator 
+        options={{
+            gestureDirection: "horizontal",
+            cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+            headerMode: "float",
+            headerShown: false
+        }}
+        initialRouteName='Login' 
+    >
         <Stack.Screen
             name={"Login"}
             component={Login}
+            options={{
+                headerShown: false
+            }}
         />
          <Stack.Screen
             name={"Register"}
             component={Register}
         />
     </Stack.Navigator>
+
 const HistoryNav=()=>
     <Stack.Navigator>
         <Stack.Screen
@@ -42,20 +53,24 @@ const HistoryNav=()=>
             
         />
     </Stack.Navigator>
-const BottomTab=()=>
+const BottomTab =()=>
     <Tab.Navigator>
         <Tab.Screen
             name={"Home"}
             component={Home}
             options={{
-                tabBarLabel:"Home",
-                tabBarIcon:({focused})=>
-                    <Icon_FontAwesome
-                        name="home"
-                        focused={focused}
-                        size={25}
-                        color={focused?"#008000":"#636363"}
-                    />
+                    gestureEnabled: true,
+                    gestureDirection: "horizontal",
+                    cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+                    headerMode: "float",
+                    tabBarLabel: "Home",
+                    tabBarIcon:({focused})=>
+                        <Icon_FontAwesome
+                            name="home"
+                            focused={focused}
+                            size={25}
+                            color={focused?"#008000":"#636363"}
+                        />
             }}
         />
         <Tab.Screen
@@ -105,8 +120,8 @@ const AppNavigator=()=>{
     return(
         <NavigationContainer>
             <Stack.Navigator
-             initialRouteName={"BottomTabs"}
-             >  
+                InitialRouteName={"Auth"}
+                >  
                 <Stack.Screen
                     name={"Auth"}
                     children={Auth}
@@ -114,11 +129,15 @@ const AppNavigator=()=>{
                         headerShown:false
                     }}
                 />
-                 <Stack.Screen
+                <Stack.Screen
                     name={"BottomTabs"}
                     children={BottomTab}
                     options={{
-                        headerShown:false
+                        headerShown:false,
+                            gestureDirection: "horizontal",
+                            cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+                            headerMode: "float",
+                            headerShown: false
                     }}
                 />
             </Stack.Navigator>
