@@ -5,7 +5,7 @@ import{
     ScrollView,
     TouchableOpacity,
 } from 'react-native'
-import styles from './style'
+import {styles} from './style'
 import {Picker} from '@react-native-picker/picker';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Ionicons from 'react-native-vector-icons/Ionicons'
