@@ -4,7 +4,7 @@ import{
     Text,
     ScrollView
 } from 'react-native'
-import styles from './style'
+import {styles} from './style'
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 

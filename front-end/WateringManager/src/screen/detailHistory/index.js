@@ -7,7 +7,7 @@ import{
     Dimensions
 } from 'react-native'
 import {LineChart} from "react-native-chart-kit";
-import styles from './style'
+import {styles} from './style'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
