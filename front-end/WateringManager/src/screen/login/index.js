@@ -11,6 +11,15 @@ export default class index extends Component{
         return(
             <View>
                 <Text>Login Screen</Text>
+                <TouchableOpacity
+                    style={{
+                        alignSelf:"center",
+                        backgroundColor:"gray",
+                        padding:12
+                    }}
+                    onPress={()=>this.props.navigation.navigate("BottomTabs")}>
+                    <Text>Navigate BottomTabs</Text>
+                </TouchableOpacity>
             </View>
         )
     }

@@ -104,9 +104,7 @@ const BottomTab=()=>
 const AppNavigator=()=>{
     return(
         <NavigationContainer>
-            <Stack.Navigator
-             initialRouteName={"BottomTabs"}
-             >  
+            <Stack.Navigator>  
                 <Stack.Screen
                     name={"Auth"}
                     children={Auth}
