@@ -18,7 +18,7 @@ export const styles=ScaledSheet.create({
     },
     buttonContainer:{
         backgroundColor:"#222629",
-        width:"320@ms",
+        width:"100%",
         borderRadius:"8@vs",
         padding:"16@vs",
         marginTop:"24@vs",

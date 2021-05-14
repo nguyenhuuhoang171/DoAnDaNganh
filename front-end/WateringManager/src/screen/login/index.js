@@ -1,11 +1,13 @@
 import React,{Component} from 'react';
 import {styles} from './style';
-import { Text, View, TextInput, TouchableOpacity } from "react-native";
+import { Text, View, TextInput, TouchableOpacity, Alert } from "react-native";
+import Authenticate from '../../model/login';
 
 export default class index extends Component{
     state = {
         email: "",
-        password: ""
+        password: "",
+        // auth: 0
     }
     render(){
         return(
@@ -31,13 +33,27 @@ export default class index extends Component{
                 {/* <TouchableOpacity onPress={() => this.props.navigation.navigate('ForgotPW')}>
                     <Text style={styles.forgot}>Quên mật khẩu?</Text>
                 </TouchableOpacity> */}
-                <TouchableOpacity style={styles.loginBtn} onPress={() => this.props.navigation.navigate('BottomTabs')}>
+                <TouchableOpacity style={styles.loginBtn} onPress={this.authenticateLogin}>
                     <Text style={styles.loginText}>Đăng nhập</Text>
                 </TouchableOpacity>
+                
                 <TouchableOpacity onPress={() => this.props.navigation.navigate('Register')}>
-                    <Text style={styles.loginText}>Đăng ký</Text>
+                    <Text style={styles.loginText}>Đăng ký {this.state.auth}</Text>
                 </TouchableOpacity>
             </View>
         );
+    }
+
+    login = (auth) => {
+        if(auth === 1){
+            this.props.navigation.navigate('BottomTabs');
+        }
+        else{
+            Alert.alert("The Email or Password incorrect!");
+        }  
+    }
+
+    authenticateLogin = async (callback) => {
+        Authenticate.Login(this.state.email, this.state.password, (auth) => this.login(auth));
     }
 }

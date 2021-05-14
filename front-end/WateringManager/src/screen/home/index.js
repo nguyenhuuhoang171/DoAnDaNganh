@@ -8,7 +8,11 @@ import {styles} from './style'
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
+
 export default class index extends Component{
+    constructor(props){
+        super(props);
+    }
     render(){
         return(
             <ScrollView style={styles.container}>

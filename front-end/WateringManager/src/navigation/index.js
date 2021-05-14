@@ -1,11 +1,12 @@
-import React from 'react'
-import {createStackNavigator, CardStyleInterpolators} from '@react-navigation/stack'
-import {NavigationContainer} from '@react-navigation/native'
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
-import {Screens} from '../screen'
-import Icon_FontAwesome from 'react-native-vector-icons/FontAwesome'
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import Icon_Fontisto from 'react-native-vector-icons/Fontisto'
+import React,{Component} from 'react';
+import {createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
+import {NavigationContainer} from '@react-navigation/native';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {Screens} from '../screen';
+import Icon_FontAwesome from 'react-native-vector-icons/FontAwesome';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon_Fontisto from 'react-native-vector-icons/Fontisto';
+import { cos } from 'react-native-reanimated';
 
 const {
     Login,
@@ -16,43 +17,47 @@ const {
     Config,
     Profile
 }=Screens;
-const Stack = createStackNavigator();
+
+const RootStack = createStackNavigator();
+const AuthStack = createStackNavigator();
+// const ConfigStack = createStackNavigator();
+const HisStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
-const Auth=()=>
-    <Stack.Navigator 
-        options={{
-            gestureDirection: "horizontal",
-            cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-            headerMode: "float",
-            headerShown: false
-        }}
-        initialRouteName='Login' 
-    >
-        <Stack.Screen
+
+const Auth =()=>
+    <AuthStack.Navigator initialRouteName='Login'>
+        <AuthStack.Screen
             name={"Login"}
             component={Login}
             options={{
-                headerShown: false
+                // headerShown: false
             }}
         />
-         <Stack.Screen
-            name={"Register"}
-            component={Register}
-        />
-    </Stack.Navigator>
+        <AuthStack.Screen
+        name={"Register"}
+        component={Register}
+        options={{
+            gestureDirection: "horizontal",
+            cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid,
+            // headerMode: "float",
+            // headerShown: false
+        }}
+    />
+    </AuthStack.Navigator>
 
 const HistoryNav=()=>
-    <Stack.Navigator>
-        <Stack.Screen
+    <HisStack.Navigator>
+        <HisStack.Screen
             name={"History"}
             component={History}
         />
-         <Stack.Screen
+         <HisStack.Screen
             name={"DetailHistory"}
             component={DetailHistory}
             
         />
-    </Stack.Navigator>
+    </HisStack.Navigator>
+
 const BottomTab =()=>
     <Tab.Navigator>
         <Tab.Screen
@@ -61,7 +66,7 @@ const BottomTab =()=>
             options={{
                     gestureEnabled: true,
                     gestureDirection: "horizontal",
-                    cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+                    cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid,
                     headerMode: "float",
                     tabBarLabel: "Home",
                     tabBarIcon:({focused})=>
@@ -119,28 +124,27 @@ const BottomTab =()=>
 const AppNavigator=()=>{
     return(
         <NavigationContainer>
-            <Stack.Navigator
-                InitialRouteName={"Auth"}
-                >  
-                <Stack.Screen
+            <RootStack.Navigator>
+                <RootStack.Screen
                     name={"Auth"}
-                    children={Auth}
+                    component={Auth}
                     options={{
-                        headerShown:false
+                        // headerShown:false,
+                        // headerMode: "screen",
                     }}
                 />
-                <Stack.Screen
+                <RootStack.Screen
                     name={"BottomTabs"}
                     children={BottomTab}
                     options={{
-                        headerShown:false,
+                        // headerShown:false,
                             gestureDirection: "horizontal",
-                            cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-                            headerMode: "float",
-                            headerShown: false
+                            cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid,
+                            // headerMode: "float",
+                            // headerShown: false
                     }}
                 />
-            </Stack.Navigator>
+            </RootStack.Navigator>
         </NavigationContainer>
     )
 }
