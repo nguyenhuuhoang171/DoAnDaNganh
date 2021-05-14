@@ -2,13 +2,33 @@ import React, {Component} from 'react'
 import{
     View,
     Text,
-    ScrollView
+    ScrollView,
+    BackHandler,
+    Alert
 } from 'react-native'
 import {styles} from './style'
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 export default class index extends Component{
+    disableBackButton=()=>{
+        Alert.alert("Hold on!", "Are you sure you want to exit app", [
+            {
+              text: "Cancel",
+              onPress: () => null,
+              style: "cancel"
+            },
+            { text: "YES", onPress: () => BackHandler.exitApp() }
+          ]);
+          return true;
+    }
+    componentDidMount() {
+        BackHandler.addEventListener("hardwareBackPress", this.disableBackButton);
+    }
+    
+    componentWillUnmount() {
+        BackHandler.removeEventListener("hardwareBackPress", this.disableBackButton);
+    }
     render(){
         return(
             <ScrollView style={styles.container}>
