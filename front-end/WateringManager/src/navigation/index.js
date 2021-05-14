@@ -35,6 +35,10 @@ const HistoryNav=()=>
         <Stack.Screen
             name={"History"}
             component={History}
+            options={{
+                  headerShown:false
+            }
+            }
         />
          <Stack.Screen
             name={"DetailHistory"}
@@ -70,6 +74,7 @@ const BottomTab=()=>
                         size={25}
                         color={focused?"#008000":"#636363"}
                     />
+                
             }}
         />
         <Tab.Screen
@@ -104,7 +109,8 @@ const BottomTab=()=>
 const AppNavigator=()=>{
     return(
         <NavigationContainer>
-            <Stack.Navigator>  
+            <Stack.Navigator
+            initialRouteName={"Auths"}>  
                 <Stack.Screen
                     name={"Auth"}
                     children={Auth}
