@@ -42,13 +42,13 @@ export default class index extends Component{
     }
 
     loadMoisture(){
-        getApi("hoangnh/feeds/soil-moisture","aio_CrUJ36iamhBNi7IPbYQbzeYSGMpk").then( (result) => {  
+        getApi("hoangnh/feeds/soil-moisture","aio_nWVt26hlMLZj2fYMhs5ut1VchVgD").then( (result) => {  
             this.setState( {moisture : result} ); 
         });
     }
 
     loadTemp(){
-        getApi("hoangnh/feeds/temperature","aio_CrUJ36iamhBNi7IPbYQbzeYSGMpk").then( (result) => {  
+        getApi("hoangnh/feeds/temperature","aio_nWVt26hlMLZj2fYMhs5ut1VchVgD").then( (result) => {  
             this.setState( {temperature : result} ); 
         });
     }
@@ -118,7 +118,6 @@ export default class index extends Component{
 }
 
 async function getApi(mqtt_key,aio_key){
-    //https://io.adafruit.com/api/v2/hoangnh/feeds/soil-moisture/data.json?X-AIO-Key=aio_OcQG34N38YJv3DMr4KnQx3BADRMb
     var linkAPI = `https://io.adafruit.com/api/v2/${mqtt_key}/data.json?X-AIO-Key=${aio_key}`;
     try{
         let response = await fetch(linkAPI);
