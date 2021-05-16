@@ -42,13 +42,13 @@ export default class index extends Component{
     }
 
     loadMoisture(){
-        getApi("hoangnh/feeds/soil-moisture","aio_nWVt26hlMLZj2fYMhs5ut1VchVgD").then( (result) => {  
+        getApi("hoangnh/feeds/soil-moisture","aio_CvvM40tF91FqhcTE66kZNH0HbT40").then( (result) => {  
             this.setState( {moisture : result} ); 
         });
     }
 
     loadTemp(){
-        getApi("hoangnh/feeds/temperature","aio_nWVt26hlMLZj2fYMhs5ut1VchVgD").then( (result) => {  
+        getApi("hoangnh/feeds/temperature","aio_CvvM40tF91FqhcTE66kZNH0HbT40").then( (result) => {  
             this.setState( {temperature : result} ); 
         });
     }
