@@ -10,9 +10,15 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 
 export default class index extends Component{
+    // state ={
+    //     temp: 25
+    // }
     constructor(props){
         super(props);
     }
+    // tạo class: chạy đầu  => interval: setTimout: 1h
+    //
+    // trước khi hủy đối tượng: hủy
     render(){
         return(
             <ScrollView style={styles.container}>

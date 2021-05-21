@@ -30,7 +30,7 @@ const Auth =()=>
             name={"Login"}
             component={Login}
             options={{
-                // headerShown: false
+                headerShown: false
             }}
         />
         <AuthStack.Screen
@@ -40,7 +40,7 @@ const Auth =()=>
             gestureDirection: "horizontal",
             cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid,
             // headerMode: "float",
-            // headerShown: false
+            headerShown: false
         }}
     />
     </AuthStack.Navigator>
@@ -50,11 +50,16 @@ const HistoryNav=()=>
         <HisStack.Screen
             name={"History"}
             component={History}
+            options={{
+                headerShown: false
+            }}
         />
          <HisStack.Screen
             name={"DetailHistory"}
             component={DetailHistory}
-            
+            options={{
+                headerShown: false
+            }}
         />
     </HisStack.Navigator>
 
@@ -129,7 +134,7 @@ const AppNavigator=()=>{
                     name={"Auth"}
                     component={Auth}
                     options={{
-                        // headerShown:false,
+                        headerShown:false,
                         // headerMode: "screen",
                     }}
                 />
@@ -141,7 +146,7 @@ const AppNavigator=()=>{
                             gestureDirection: "horizontal",
                             cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid,
                             // headerMode: "float",
-                            // headerShown: false
+                            headerShown: false
                     }}
                 />
             </RootStack.Navigator>

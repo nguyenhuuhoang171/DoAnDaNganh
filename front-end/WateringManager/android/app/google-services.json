@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1074289505117",
+    "project_id": "wateringmanager",
+    "storage_bucket": "wateringmanager.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1074289505117:android:a4d126af115fc2a4b6aeb4",
+        "android_client_info": {
+          "package_name": "com.wateringmanager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1074289505117-8orbh8bckrb04prj9rhe87ftjrm8343t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqRZe08T26MKM-I82dP8ouefWWZ5lNuEs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1074289505117-8orbh8bckrb04prj9rhe87ftjrm8343t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
