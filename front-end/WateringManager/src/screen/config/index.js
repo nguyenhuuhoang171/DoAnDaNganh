@@ -17,28 +17,28 @@ export default class index extends Component{
         Tabfocused:"Auto",
         isOn:false,
         data:[
-            {
-                Name:"Máy 1",
-                Min:"1",
-                Max:"",
-                Time:[
-                    {
-                        Id:"1",
-                        Begin:"06:00",
-                        End:"06:15",
-                    },
-                    {
-                        Id:"2",
-                        Begin:"06:00",
-                        End:"06:15",
-                    }, 
-                    {
-                        Id:"3",
-                        Begin:"12:00",
-                        End:"14:15",
-                    }
-                ]
-            },
+            // {
+            //     Name:"Máy 1",
+            //     Min:"1",
+            //     Max:"",
+            //     Time:[
+            //         {
+            //             Id:"1",
+            //             Begin:"06:00",
+            //             End:"06:15",
+            //         },
+            //         {
+            //             Id:"2",
+            //             Begin:"06:00",
+            //             End:"06:15",
+            //         }, 
+            //         {
+            //             Id:"3",
+            //             Begin:"12:00",
+            //             End:"14:15",
+            //         }
+            //     ]
+            // },
             {
                 Name:"Máy 2",
                 Min:"",
@@ -228,7 +228,14 @@ export default class index extends Component{
                                             isOn={this.state.isOn}
                                             onColor="green"
                                             offColor="gray"
-                                            onToggle={isOn =>this.setState({isOn:isOn}) }
+                                            onToggle={isOn =>{
+                                                if( isOn == true){
+                                                    postApi("hoangnh/feeds/toggle-switch","aio_zpPc43KdQ2oo7bsUoxu4BpiL1cZo",{value:"ON"});
+                                                }else{
+                                                    postApi("hoangnh/feeds/toggle-switch","aio_zpPc43KdQ2oo7bsUoxu4BpiL1cZo",{value:"OFF"});
+                                                }
+                                                this.setState({isOn:isOn});
+                                            } }
                                             />
                                     </View>
                                 )})          
@@ -239,3 +246,17 @@ export default class index extends Component{
         )
     }
 }
+
+async function postApi(mqtt_key,aio_key,data){
+    var linkAPI = `https://io.adafruit.com/api/v2/${mqtt_key}/data.json?X-AIO-Key=${aio_key}`;
+    fetch(linkAPI,{
+        method : 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+    }) ;
+    // .then( (response) => {
+    //     response.json();
+    // }).then( (responseJSON) => {
+    //     responseJSON[0].value
+    // })
+};
