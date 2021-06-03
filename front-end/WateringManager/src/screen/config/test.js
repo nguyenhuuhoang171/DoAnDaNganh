@@ -1,0 +1,28 @@
+state={
+    Tabfocused:"Auto",
+    isOn:false,
+    data:[
+        {
+            Name:"Máy 1",
+            Min:"1",
+            Max:"",
+            Time:[
+                {
+                    Id:"1",
+                    Begin:"06:00",
+                    End:"06:15",
+                },
+                {
+                    Id:"2",
+                    Begin:"06:00",
+                    End:"06:15",
+                }, 
+                {
+                    Id:"3",
+                    Begin:"12:00",
+                    End:"14:15",
+                }
+            ]
+        },
+    ],
+}
