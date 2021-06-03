@@ -1,0 +1,50 @@
+import {ScaledSheet} from "react-native-size-matters";
+
+export const styles=ScaledSheet.create({
+    container:{
+        flex:1,
+        backgroundColor:"#222629",
+        paddingHorizontal:"16@ms",
+        paddingVertical:"16@vs"
+    },
+    panel:{
+        backgroundColor:"#C4C4C4",
+        borderRadius:"8@ms",
+        paddingHorizontal:"12@ms",
+        paddingVertical:"24@vs",
+        marginTop:"16@vs",
+        flexDirection:"column",
+        justifyContent:"space-between",
+    },
+    image:{
+        width:"144@ms",
+        height:"144@ms",
+        backgroundColor:"gray",
+        alignSelf:"center",
+        marginBottom:"24@vs"
+    },
+    text:{
+        fontSize:18,
+        fontWeight:"500",
+        borderWidth:1,
+        paddingVertical:"6@ms",
+        paddingHorizontal:"4@ms",
+        marginTop:"12@vs",
+        borderRadius:"8@ms",
+    },
+    button:{
+        paddingVertical:"12@vs",
+        paddingHorizontal:"24@ms",
+        backgroundColor:"white",
+        width:"60%",
+        alignSelf:"center",
+        marginTop:"24@vs",
+        flexDirection:"row",
+        justifyContent:"center",
+        alignItems:"center",
+        borderRadius:"24@ms"
+    },
+    textOut:{
+        fontSize:20
+    }
+})
