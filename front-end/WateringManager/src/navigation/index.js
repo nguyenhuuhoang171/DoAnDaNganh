@@ -110,7 +110,7 @@ const AppNavigator=()=>{
     return(
         <NavigationContainer>
             <Stack.Navigator
-            initialRouteName={"Auths"}>  
+            initialRouteName={"Auth"}>  
                 <Stack.Screen
                     name={"Auth"}
                     children={Auth}

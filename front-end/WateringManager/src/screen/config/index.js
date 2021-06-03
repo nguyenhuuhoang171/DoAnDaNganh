@@ -11,6 +11,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import {Picker} from '@react-native-picker/picker';
 import ToggleSwitch from 'toggle-switch-react-native'
+import {Platform} from 'react-native';
 
 export default class index extends Component{
     state={
@@ -228,7 +229,14 @@ export default class index extends Component{
                                             isOn={this.state.isOn}
                                             onColor="green"
                                             offColor="gray"
-                                            onToggle={isOn =>this.setState({isOn:isOn}) }
+                                            onToggle={isOn =>{
+                                                if( isOn == true){
+                                                    postApi("hoangnh/feeds/toggle-switch","aio_zpPc43KdQ2oo7bsUoxu4BpiL1cZo",{value:"ON"});
+                                                }else{
+                                                    postApi("hoangnh/feeds/toggle-switch","aio_zpPc43KdQ2oo7bsUoxu4BpiL1cZo",{value:"OFF"});
+                                                }
+                                                this.setState({isOn:isOn});
+                                            } }
                                             />
                                     </View>
                                 )})          
@@ -239,3 +247,17 @@ export default class index extends Component{
         )
     }
 }
+
+async function postApi(mqtt_key,aio_key,data){
+    var linkAPI = `https://io.adafruit.com/api/v2/${mqtt_key}/data.json?X-AIO-Key=${aio_key}`;
+    fetch(linkAPI,{
+        method : 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+    }) ;
+    // .then( (response) => {
+    //     response.json();
+    // }).then( (responseJSON) => {
+    //     responseJSON[0].value
+    // })
+};

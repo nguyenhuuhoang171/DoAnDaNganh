@@ -11,6 +11,15 @@ import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 export default class index extends Component{
+
+    constructor (props){
+        super(props);
+        this.state = ({
+            moisture : 0,
+            temperature : 0
+        });
+    }
+
     disableBackButton=()=>{
         Alert.alert("Hold on!", "Are you sure you want to exit app", [
             {
@@ -24,11 +33,29 @@ export default class index extends Component{
     }
     componentDidMount() {
         BackHandler.addEventListener("hardwareBackPress", this.disableBackButton);
+        this.loadMoisture();
+        this.loadTemp();
     }
     
     componentWillUnmount() {
         BackHandler.removeEventListener("hardwareBackPress", this.disableBackButton);
     }
+
+    loadMoisture(){
+        getApi("hoangnh/feeds/soil-moisture","aio_zpPc43KdQ2oo7bsUoxu4BpiL1cZo").then( (result) => {  
+            this.setState( {moisture : JSON.parse(result).data} ); 
+        });
+    }
+
+    loadTemp(){
+        getApi("hoangnh/feeds/temperature","aio_zpPc43KdQ2oo7bsUoxu4BpiL1cZo").then( (result) => {
+            var temp_humid = JSON.parse(result).data;
+            var i = temp_humid.indexOf("-");
+            var temp = temp_humid.slice(0,i);
+            this.setState( {temperature : temp} ); 
+        });
+    }
+
     render(){
         return(
             <ScrollView style={styles.container}>
@@ -36,7 +63,7 @@ export default class index extends Component{
                     <Text style={styles.title}> Máy bơm 1</Text>
                     <View style={styles.row}>
                         <Text style={styles.text}>Nhiệt độ: 
-                                <Text> 25</Text>
+                                <Text> {this.state.temperature}</Text>
                                 <MaterialCommunityIcons
                                     name="temperature-celsius"
                                     size={20}
@@ -44,7 +71,7 @@ export default class index extends Component{
                             </Text>
                         <AnimatedCircularProgress
                             size={120}
-                            fill={25}
+                            fill={+this.state.temperature}
                             lineCap="round"
                             rotation={180}
                             arcSweepAngle={360}
@@ -54,7 +81,7 @@ export default class index extends Component{
                             backgroundWidth={6}>
                             {()=>(
                                 <View style={{justifyContent:"center", alignItems:"center"}}>
-                                    <Text style={{fontSize:20}}> 25
+                                    <Text style={{fontSize:20}}> {this.state.temperature}
                                         <MaterialCommunityIcons
                                             name="temperature-celsius"
                                             size={20}
@@ -67,11 +94,11 @@ export default class index extends Component{
                     </View>
                     <View style={styles.row}>
                         <Text style={styles.text}>Độ ẩm: 
-                                <Text> 75%</Text>
+                                <Text> {this.state.moisture} %</Text>
                             </Text>
                         <AnimatedCircularProgress
                             size={120}
-                            fill={75}
+                            fill={+this.state.moisture}
                             lineCap="round"
                             rotation={180}
                             arcSweepAngle={360}
@@ -81,7 +108,7 @@ export default class index extends Component{
                             backgroundWidth={6}>
                             {()=>(
                                 <View style={{justifyContent:"center", alignItems:"center"}}>
-                                    <Text style={{fontSize:20}}> 75%</Text>
+                                    <Text style={{fontSize:20}}> {this.state.moisture} %</Text>
                                 </View>
                                 )
                             }
@@ -92,3 +119,15 @@ export default class index extends Component{
         )
     }
 }
+
+async function getApi(mqtt_key,aio_key){
+    var linkAPI = `https://io.adafruit.com/api/v2/${mqtt_key}/data.json?X-AIO-Key=${aio_key}`;
+    try{
+        let response = await fetch(linkAPI);
+        let responseJson = await response.json();
+        return responseJson[0].value;
+    }catch(error){
+        console.error(`Error is : ${error}`);
+    }
+     
+};
