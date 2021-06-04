@@ -32,3 +32,44 @@
 [0m2021.06.01 12:20:18 WARN  Build server is not auto-connectable.[0m
 [0m2021.06.01 12:20:18 WARN  no build tool detected in workspace 'C:\Users\ADMIN\Desktop\DADN_App\DoAnDaNganh\front-end\WateringManager'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. [0m
 [0m2021.06.01 16:07:44 INFO  shutting down Metals[0m
+[0m2021.06.01 16:09:53 INFO  Started: Metals version 0.10.4 in workspace 'C:\Users\ADMIN\Desktop\DADN_App\DoAnDaNganh\front-end\WateringManager' for client Visual Studio Code 1.56.2.[0m
+[0m2021.06.01 16:10:01 INFO  time: initialize in 8.13s[0m
+[0m2021.06.01 16:10:01 WARN  Build server is not auto-connectable.[0m
+[0m2021.06.01 16:10:01 WARN  no build tool detected in workspace 'C:\Users\ADMIN\Desktop\DADN_App\DoAnDaNganh\front-end\WateringManager'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. [0m
+[0m2021.06.01 16:10:21 INFO  shutting down Metals[0m
+[0m2021.06.03 14:56:56 INFO  Started: Metals version 0.10.4 in workspace 'C:\Users\ADMIN\Desktop\DADN_App\DoAnDaNganh\front-end\WateringManager' for client Visual Studio Code 1.56.2.[0m
+[0m2021.06.03 14:57:11 INFO  time: initialize in 14s[0m
+[0m2021.06.03 14:57:11 WARN  Build server is not auto-connectable.[0m
+[0m2021.06.03 14:57:11 WARN  no build tool detected in workspace 'C:\Users\ADMIN\Desktop\DADN_App\DoAnDaNganh\front-end\WateringManager'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. [0m
+[0m2021.06.03 16:34:17 INFO  shutting down Metals[0m
+[0m2021.06.03 16:35:55 INFO  Started: Metals version 0.10.4 in workspace 'C:\Users\ADMIN\Desktop\DADN_App\DoAnDaNganh\front-end\WateringManager' for client Visual Studio Code 1.56.2.[0m
+[0m2021.06.03 16:35:59 INFO  time: initialize in 4.3s[0m
+[0m2021.06.03 16:36:00 WARN  Build server is not auto-connectable.[0m
+[0m2021.06.03 16:36:00 WARN  no build tool detected in workspace 'C:\Users\ADMIN\Desktop\DADN_App\DoAnDaNganh\front-end\WateringManager'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. [0m
+[0m2021.06.03 16:42:05 INFO  shutting down Metals[0m
+[0m2021.06.03 18:36:33 INFO  Started: Metals version 0.10.4 in workspace 'C:\Users\ADMIN\Desktop\DADN_App\DoAnDaNganh\front-end\WateringManager' for client Visual Studio Code 1.56.2.[0m
+[0m2021.06.03 18:36:36 INFO  time: initialize in 3.63s[0m
+[0m2021.06.03 18:36:36 WARN  Build server is not auto-connectable.[0m
+[0m2021.06.03 18:36:36 WARN  no build tool detected in workspace 'C:\Users\ADMIN\Desktop\DADN_App\DoAnDaNganh\front-end\WateringManager'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. [0m
+Jun 03, 2021 8:51:33 PM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+INFO: Unsupported notification method: $/setTrace
+Jun 03, 2021 9:16:30 PM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+INFO: Unsupported notification method: $/setTrace
+Jun 03, 2021 9:21:11 PM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+INFO: Unsupported notification method: $/setTrace
+[0m2021.06.03 22:57:09 INFO  shutting down Metals[0m
+[0m2021.06.04 08:43:50 INFO  Started: Metals version 0.10.4 in workspace 'C:\Users\ADMIN\Desktop\DADN_App\DoAnDaNganh\front-end\WateringManager' for client Visual Studio Code 1.56.2.[0m
+[0m2021.06.04 08:43:53 INFO  time: initialize in 3.17s[0m
+[0m2021.06.04 08:43:53 WARN  Build server is not auto-connectable.[0m
+[0m2021.06.04 08:43:53 WARN  no build tool detected in workspace 'C:\Users\ADMIN\Desktop\DADN_App\DoAnDaNganh\front-end\WateringManager'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. [0m
+[0m2021.06.04 09:59:08 INFO  shutting down Metals[0m
+[0m2021.06.04 10:02:17 INFO  Started: Metals version 0.10.4 in workspace 'C:\Users\ADMIN\Desktop\DADN_App\DoAnDaNganh\front-end\WateringManager' for client Visual Studio Code 1.56.2.[0m
+[0m2021.06.04 10:02:22 INFO  time: initialize in 4.91s[0m
+[0m2021.06.04 10:02:22 WARN  Build server is not auto-connectable.[0m
+[0m2021.06.04 10:02:22 WARN  no build tool detected in workspace 'C:\Users\ADMIN\Desktop\DADN_App\DoAnDaNganh\front-end\WateringManager'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. [0m
+[0m2021.06.04 10:32:29 INFO  shutting down Metals[0m
+[0m2021.06.04 10:35:03 INFO  Started: Metals version 0.10.4 in workspace 'C:\Users\ADMIN\Desktop\DADN_App\DoAnDaNganh\front-end\WateringManager' for client Visual Studio Code 1.56.2.[0m
+[0m2021.06.04 10:35:06 INFO  time: initialize in 3.95s[0m
+[0m2021.06.04 10:35:06 WARN  Build server is not auto-connectable.[0m
+[0m2021.06.04 10:35:06 WARN  no build tool detected in workspace 'C:\Users\ADMIN\Desktop\DADN_App\DoAnDaNganh\front-end\WateringManager'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. [0m
+[0m2021.06.04 11:07:24 INFO  shutting down Metals[0m

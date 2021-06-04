@@ -14,56 +14,74 @@ import ToggleSwitch from 'toggle-switch-react-native'
 import {Platform} from 'react-native';
 
 export default class index extends Component{
-    state={
-        Tabfocused:"Auto",
-        isOn:false,
-        data:[
-            // {
-            //     Name:"Máy 1",
-            //     Min:"1",
-            //     Max:"",
-            //     Time:[
-            //         {
-            //             Id:"1",
-            //             Begin:"06:00",
-            //             End:"06:15",
-            //         },
-            //         {
-            //             Id:"2",
-            //             Begin:"06:00",
-            //             End:"06:15",
-            //         }, 
-            //         {
-            //             Id:"3",
-            //             Begin:"12:00",
-            //             End:"14:15",
-            //         }
-            //     ]
-            // },
-            {
-                Name:"Máy 2",
-                Min:"",
-                Max:"",
-                Time:[
-                    {
-                        Id:"1",
-                        Begin:"06:00",
-                        End:"06:15",
-                    },
-                    {
-                        Id:"2",
-                        Begin:"06:00",
-                        End:"06:15",
-                    }, 
-                    {
-                        Id:"3",
-                        Begin:"12:00",
-                        End:"14:15",
-                    }
-                ]
-            }
-        ],
+    constructor (props){
+        super(props);
+        this.state = ({
+            Tabfocused:"Auto",
+            isOn:false,
+            data:[
+                {
+                    Name:"Máy 1",
+                    Min:"1",
+                    Max:"",
+                    Time:[
+                        {
+                            Id:"1",
+                            Begin:"06:00",
+                            End:"06:15",
+                        },
+                        {
+                            Id:"2",
+                            Begin:"06:00",
+                            End:"06:15",
+                        }, 
+                        {
+                            Id:"3",
+                            Begin:"12:00",
+                            End:"14:15",
+                        }
+                    ]
+                }
+                // {
+                //     Name:"Máy 2",
+                //     Min:"",
+                //     Max:"",
+                //     Time:[
+                //         {
+                //             Id:"1",
+                //             Begin:"06:00",
+                //             End:"06:15",
+                //         },
+                //         {
+                //             Id:"2",
+                //             Begin:"06:00",
+                //             End:"06:15",
+                //         }, 
+                //         {
+                //             Id:"3",
+                //             Begin:"12:00",
+                //             End:"14:15",
+                //         }
+                //     ]
+                // }
+            ],
+                
+        });
     }
+    
+    componentDidMount() {
+        this.loadStateSwitch();
+    }
+
+    loadStateSwitch(){
+        //getKey("BBC").then( (keyBBC) => {
+            getApi("hoangnh/feeds/toggle-switch", "aio_zpPc43KdQ2oo7bsUoxu4BpiL1cZo" ).then( (result) => {  
+                this.setState( {isOn : JSON.parse(result).data} ); 
+            });
+        //});
+        
+    }
+
     render(){
         return(
             <View style={styles.container}>
@@ -231,9 +249,9 @@ export default class index extends Component{
                                             offColor="gray"
                                             onToggle={isOn =>{
                                                 if( isOn == true){
-                                                    postApi("hoangnh/feeds/toggle-switch","aio_zpPc43KdQ2oo7bsUoxu4BpiL1cZo",{value:"ON"});
+                                                    postApi("hoangnh/feeds/toggle-switch","aio_zpPc43KdQ2oo7bsUoxu4BpiL1cZo",{value:"{ \"id\":\"11\", \"name\":\"RELAY\", \"data\":\"1\", \"unit\":\"\" }"});
                                                 }else{
-                                                    postApi("hoangnh/feeds/toggle-switch","aio_zpPc43KdQ2oo7bsUoxu4BpiL1cZo",{value:"OFF"});
+                                                    postApi("hoangnh/feeds/toggle-switch","aio_zpPc43KdQ2oo7bsUoxu4BpiL1cZo",{value:"{ \"id\":\"11\", \"name\":\"RELAY\", \"data\":\"0\", \"unit\":\"\" }"});
                                                 }
                                                 this.setState({isOn:isOn});
                                             } }
@@ -255,9 +273,16 @@ async function postApi(mqtt_key,aio_key,data){
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(data)
     }) ;
-    // .then( (response) => {
-    //     response.json();
-    // }).then( (responseJSON) => {
-    //     responseJSON[0].value
-    // })
+};
+
+async function getApi(mqtt_key,aio_key){
+    var linkAPI = `https://io.adafruit.com/api/v2/${mqtt_key}/data.json?X-AIO-Key=${aio_key}`;
+    try{
+        let response = await fetch(linkAPI);
+        let responseJson = await response.json();
+        return responseJson[0].value;
+    }catch(error){
+        console.error(`Error is : ${error}`);
+    }
+     
 };

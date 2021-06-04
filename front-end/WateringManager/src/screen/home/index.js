@@ -42,18 +42,24 @@ export default class index extends Component{
     }
 
     loadMoisture(){
-        getApi("hoangnh/feeds/soil-moisture","aio_zpPc43KdQ2oo7bsUoxu4BpiL1cZo").then( (result) => {  
-            this.setState( {moisture : JSON.parse(result).data} ); 
+        getKey("BBC").then( (keyBBC) => {
+            getApi("CSE_BBC/feeds/bk-iot-soil", keyBBC ).then( (result) => {  
+                this.setState( {moisture : JSON.parse(result).data} ); 
+            });
         });
+        
     }
 
     loadTemp(){
-        getApi("hoangnh/feeds/temperature","aio_zpPc43KdQ2oo7bsUoxu4BpiL1cZo").then( (result) => {
-            var temp_humid = JSON.parse(result).data;
-            var i = temp_humid.indexOf("-");
-            var temp = temp_humid.slice(0,i);
-            this.setState( {temperature : temp} ); 
+        getKey("BBC").then( ( keyBBC) => {
+            getApi("CSE_BBC/feeds/bk-iot-temp-humid", keyBBC ).then( (result) => {
+                var temp_humid = JSON.parse(result).data;
+                var i = temp_humid.indexOf("-");
+                var temp = temp_humid.slice(0,i);
+                this.setState( {temperature : temp} ); 
+            });
         });
+        
     }
 
     render(){
@@ -131,3 +137,19 @@ async function getApi(mqtt_key,aio_key){
     }
      
 };
+
+async function getKey(key){
+    var linkKey = `http://dadn.esp32thanhdanh.link`;
+    try{
+        let response = await fetch(linkKey);
+        let responseJson = await response.json();
+        if(key == "BBC"){
+            return responseJson.keyBBC;
+        }
+        if(key == "BBC1"){
+            return responseJson.keyBBC1;
+        }
+    }catch(error){
+        console.error(`Error is : ${error}`);
+    }
+}
