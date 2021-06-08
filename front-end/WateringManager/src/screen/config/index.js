@@ -9,7 +9,6 @@ import{
 import {styles} from './style'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
-import {Picker} from '@react-native-picker/picker';
 import ToggleSwitch from 'toggle-switch-react-native'
 import {Platform} from 'react-native';
 
@@ -17,52 +16,22 @@ export default class index extends Component{
     state={
         Tabfocused:"Auto",
         isOn:false,
-        data:[
-            // {
-            //     Name:"Máy 1",
-            //     Min:"1",
-            //     Max:"",
-            //     Time:[
-            //         {
-            //             Id:"1",
-            //             Begin:"06:00",
-            //             End:"06:15",
-            //         },
-            //         {
-            //             Id:"2",
-            //             Begin:"06:00",
-            //             End:"06:15",
-            //         }, 
-            //         {
-            //             Id:"3",
-            //             Begin:"12:00",
-            //             End:"14:15",
-            //         }
-            //     ]
-            // },
+        Name:"Máy 1",
+        Min:"",
+        Max:"",
+        Time:
+        [
             {
-                Name:"Máy 2",
-                Min:"",
-                Max:"",
-                Time:[
-                    {
-                        Id:"1",
-                        Begin:"06:00",
-                        End:"06:15",
-                    },
-                    {
-                        Id:"2",
-                        Begin:"06:00",
-                        End:"06:15",
-                    }, 
-                    {
-                        Id:"3",
-                        Begin:"12:00",
-                        End:"14:15",
-                    }
-                ]
-            }
-        ],
+                Id:"1",
+                Begin:"06:00",
+                End:"06:15",
+            },
+            {
+                Id:"2",
+                Begin:"09:00",
+                End:"09:15",
+            },
+        ]
     }
     render(){
         return(
@@ -104,12 +73,10 @@ export default class index extends Component{
                     <ScrollView
                         style={styles.ListView}> 
                         {this.state.Tabfocused=="Auto"?
-                            this.state.data.map(child=>{
-                                return(
                                     <View 
                                         style={styles.viewdetail}
-                                        key={child.Name}>
-                                        <Text style={styles.text}>{child.Name}</Text>
+                                        key={this.state.Name}>
+                                        <Text style={styles.text}>{this.state.Name}</Text>
                                             <View style={{flexDirection:"row"}}>
                                                 <Ionicons
                                                     name="water"
@@ -117,46 +84,28 @@ export default class index extends Component{
                                                     color="blue"
                                                     style={{marginTop:12}}
                                                 />
-                                                <View style={styles.picker}>
-                                                    <Picker
-                                                        selectedValue={child.Min}
-                                                        onValueChange={(itemValue, itemIndex) =>{}}  
-                                                        style={{color:"white"}}
-                                                        mode="dropdown">
-                                                        <Picker.Item label="10%" value="10%" color="white" />
-                                                        <Picker.Item label="20%" value="20%" color="white"/>
-                                                        <Picker.Item label="30%" value="30%" color="white"/>
-                                                        <Picker.Item label="40%" value="40%" color="white"/>
-                                                        <Picker.Item label="50%" value="50%" color="white"/>
-                                                        <Picker.Item label="60%" value="60%" color="white"/>
-                                                        <Picker.Item label="70%" value="70%" color="white"/>
-                                                        <Picker.Item label="80%" value="80%" color="white"/>
-                                                        <Picker.Item label="90%" value="90%" color="white"/>
-                                                        <Picker.Item label="100%" value="100%" color="white"/>
-                                                    </Picker>
+                                                <View style={styles.containerinput}>
+                                                    <TextInput
+                                                        placeholder={"Min"}
+                                                        value={this.state.Min}
+                                                        style={styles.timetext}
+                                                        placeholderTextColor={"gray"}
+                                                        onChangeText={text=>this.setState({Min:text})}
+                                                    />
                                                 </View>
-                                                <Text style={{color:"white",fontSize:35}}>-</Text>
-                                                <View style={styles.picker}>
-                                                    <Picker
-                                                        selectedValue={child.Max}
-                                                        onValueChange={(itemValue, itemIndex) =>{}}  
-                                                        style={{color:"white",}}
-                                                        mode="dropdown">
-                                                        <Picker.Item label="10%" value="10%" color="white" />
-                                                        <Picker.Item label="20%" value="20%" color="white"/>
-                                                        <Picker.Item label="30%" value="30%" color="white"/>
-                                                        <Picker.Item label="40%" value="40%" color="white"/>
-                                                        <Picker.Item label="50%" value="50%" color="white"/>
-                                                        <Picker.Item label="60%" value="60%" color="white"/>
-                                                        <Picker.Item label="70%" value="70%" color="white"/>
-                                                        <Picker.Item label="80%" value="80%" color="white"/>
-                                                        <Picker.Item label="90%" value="90%" color="white"/>
-                                                        <Picker.Item label="100%" value="100%" color="white"/>
-                                                    </Picker>
-                                                </View>             
+                                                <Text style={{color:"white",fontSize:35, marginLeft:6}}>-</Text>
+                                                <View style={styles.containerinput}>
+                                                    <TextInput
+                                                        placeholder={"Max"}
+                                                        value={this.state.Max}
+                                                        style={styles.timetext}
+                                                        placeholderTextColor={"gray"}
+                                                        onChangeText={text=>this.setState({Max:text})}
+                                                    />
+                                                </View>
                                             </View>
                                         <View style={{flexDirection:"row",flexWrap:"wrap", justifyContent:"space-between"}}>
-                                        {child.Time.map(childtime=>{
+                                        {this.state.Time.map(childtime=>{
                                             return(
                                                 <View
                                                     style={{flexDirection:"row", marginTop:14}}
@@ -174,18 +123,13 @@ export default class index extends Component{
                                         })}
                                         </View>    
                                     </View>
-                                    
-                                )
-                            })
                             :
                             this.state.Tabfocused=="Timer"?
-                            this.state.data.map(child=>{
-                                return(
                                     <View 
                                         style={styles.viewdetail}
-                                        key={child.Name}>
-                                        <Text style={styles.text}>{child.Name}</Text>
-                                        {child.Time.map(childtime=>{
+                                        key={this.state.Name}>
+                                        <Text style={styles.text}>{this.state.Name}</Text>
+                                        {this.state.Time.map(childtime=>{
                                             return(
                                                 <View
                                                     style={{flexDirection:"row", marginTop:14}}
@@ -199,8 +143,10 @@ export default class index extends Component{
                                                     <View style={styles.containerinput}>
                                                         <TextInput
                                                             placeholder={"--:--"}
+                                                            value={childtime.Begin}
                                                             style={styles.timetext}
                                                             placeholderTextColor={"gray"}
+                                                            
 
                                                         />
                                                     </View>
@@ -208,6 +154,7 @@ export default class index extends Component{
                                                     <View style={styles.containerinput}>
                                                         <TextInput
                                                             placeholder={"--:--"}
+                                                            value={childtime.End}
                                                             style={styles.timetext}
                                                             placeholderTextColor={"gray"}
 
@@ -217,14 +164,11 @@ export default class index extends Component{
                                             )
                                         })}            
                                     </View>
-                                )})
                             :
-                            this.state.data.map(child=>{
-                                return(
                                     <View 
                                         style={[styles.viewdetail,{flexDirection:"row",justifyContent:"space-between"}]}
-                                        key={child.Name}>
-                                        <Text style={[styles.text,{alignSelf:"center"}]}>{child.Name}</Text>
+                                        key={this.state.Name}>
+                                        <Text style={[styles.text,{alignSelf:"center"}]}>{this.state.Name}</Text>
                                         <ToggleSwitch
                                             isOn={this.state.isOn}
                                             onColor="green"
@@ -238,8 +182,7 @@ export default class index extends Component{
                                                 this.setState({isOn:isOn});
                                             } }
                                             />
-                                    </View>
-                                )})          
+                                    </View>        
                         }
                     </ScrollView>
                 </View>
