@@ -9,6 +9,8 @@ import{
 import {styles} from './style'
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import firestore from '@react-native-firebase/firestore';
+import {getApi, postApi,getKey} from '../index.js'
 
 export default class index extends Component{
 
@@ -42,24 +44,35 @@ export default class index extends Component{
     }
 
     loadMoisture(){
-        getKey("BBC").then( (keyBBC) => {
-            getApi("CSE_BBC/feeds/bk-iot-soil", keyBBC ).then( (result) => {  
+        //getKey("BBC").then( (keyBBC) => {
+            getApi("CSE_BBC/feeds/bk-iot-soil", "" ).then( (result) => {  
                 this.setState( {moisture : JSON.parse(result).data} ); 
             });
-        });
-        
+        //});
+        this.checkMinMax();
     }
 
     loadTemp(){
-        getKey("BBC").then( ( keyBBC) => {
-            getApi("CSE_BBC/feeds/bk-iot-temp-humid", keyBBC ).then( (result) => {
+        //getKey("BBC").then( ( keyBBC) => {
+            getApi("CSE_BBC/feeds/bk-iot-temp-humid", "" ).then( (result) => {
                 var temp_humid = JSON.parse(result).data;
                 var i = temp_humid.indexOf("-");
                 var temp = temp_humid.slice(0,i);
                 this.setState( {temperature : temp} ); 
             });
-        });
+        //});
         
+    }
+
+    checkMinMax(){
+        firestore().collection('thong_tin_may').doc("Máy 1").get().then( (doc) =>{
+            if ( doc.get("Min") > this.state.moisture ){
+                //bơm
+            }
+            if(doc.get("Max") < this.state.moisture){
+                // tắt máy bơm
+            }
+        });
     }
 
     render(){
@@ -126,30 +139,5 @@ export default class index extends Component{
     }
 }
 
-async function getApi(mqtt_key,aio_key){
-    var linkAPI = `https://io.adafruit.com/api/v2/${mqtt_key}/data.json?X-AIO-Key=${aio_key}`;
-    try{
-        let response = await fetch(linkAPI);
-        let responseJson = await response.json();
-        return responseJson[0].value;
-    }catch(error){
-        console.error(`Error is : ${error}`);
-    }
-     
-};
 
-async function getKey(key){
-    var linkKey = `http://dadn.esp32thanhdanh.link`;
-    try{
-        let response = await fetch(linkKey);
-        let responseJson = await response.json();
-        if(key == "BBC"){
-            return responseJson.keyBBC;
-        }
-        if(key == "BBC1"){
-            return responseJson.keyBBC1;
-        }
-    }catch(error){
-        console.error(`Error is : ${error}`);
-    }
-}
+

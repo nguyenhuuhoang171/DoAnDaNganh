@@ -11,34 +11,38 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import ToggleSwitch from 'toggle-switch-react-native'
 import {Platform} from 'react-native';
+import firestore from '@react-native-firebase/firestore';
+import {getApi, postApi,getKey} from '../index.js'
 
 export default class index extends Component{
     constructor (props){
         super(props);
+        this.document = firestore().collection('thong_tin_may').doc("Máy 1");
         this.state = ({
-           Tabfocused:"Auto",
-        isOn:false,
-        Name:"Máy 1",
-        Min:"",
-        Max:"",
-        Time:
-        [
-            {
-                Id:"1",
-                Begin:"06:00",
-                End:"06:15",
-            },
-            {
-                Id:"2",
-                Begin:"09:00",
-                End:"09:15",
-            },
-        ]          
+            Tabfocused:"Auto",
+            isOn:false,
+            Name:"Máy 1",
+            Min:"",
+            Max:"",
+            Time:
+            [
+                // {
+                //     Id:"1",
+                //     Begin:"06:00",
+                //     End:"06:15",
+                // },
+                // {
+                //     Id:"2",
+                //     Begin:"09:00",
+                //     End:"09:15",
+                // },
+            ]          
         });
     }
     
     componentDidMount() {
         this.loadStateSwitch();
+        this.loadDataFireBase();
     }
 
     loadStateSwitch(){
@@ -47,6 +51,22 @@ export default class index extends Component{
                 this.setState( {isOn : JSON.parse(result).data} ); 
             });
         //});
+    }
+
+    loadDataFireBase(){
+        this.document.get().then( (doc) =>{
+            this.setState( {
+                Min : doc.get("Min"),
+                Max : doc.get("Max")
+            });
+            firestore().collection('thong_tin_may').doc("Máy 1").collection("Time").get().then( times =>{
+                let tempTime = [];
+                times.forEach(element => {
+                    tempTime.push({Id: element.id,Begin: element.get("Begin") ,End: element.get("End")});
+                });
+                this.setState({Time : tempTime});
+            });
+        });
     }
 
     render(){
@@ -103,20 +123,37 @@ export default class index extends Component{
                                                 <View style={styles.containerinput}>
                                                     <TextInput
                                                         placeholder={"Min"}
-                                                        value={this.state.Min}
+                                                        value={String(this.state.Min)}
                                                         style={styles.timetext}
+                                                        keyboardType = {"numeric"}
                                                         placeholderTextColor={"gray"}
-                                                        onChangeText={text=>this.setState({Min:text})}
+                                                        onChangeText={(text) => {
+                                                                let textNum = Number(text);
+                                                                textNum = textNum<0 ? 0 : textNum>1023 ? 1023 : textNum;
+                                                                this.setState({Min:String(textNum)});
+                                                                this.document.update({
+                                                                    Min: textNum
+                                                                });
+                                                            }
+                                                        }
                                                     />
                                                 </View>
                                                 <Text style={{color:"white",fontSize:35, marginLeft:6}}>-</Text>
                                                 <View style={styles.containerinput}>
                                                     <TextInput
                                                         placeholder={"Max"}
-                                                        value={this.state.Max}
+                                                        value={String(this.state.Max)}
                                                         style={styles.timetext}
+                                                        keyboardType = {"numeric"}
                                                         placeholderTextColor={"gray"}
-                                                        onChangeText={text=>this.setState({Max:text})}
+                                                        onChangeText={(text)=>{
+                                                            let textNum = Number(text);
+                                                            textNum = textNum<0 ? 0 : textNum>1023 ? 1023 : textNum<this.state.Min ? this.state.Min :textNum;
+                                                            this.setState({Max:String(textNum)});
+                                                            this.document.update({
+                                                                Max: textNum
+                                                            });
+                                                        }}
                                                     />
                                                 </View>
                                             </View>
@@ -207,23 +244,4 @@ export default class index extends Component{
     }
 }
 
-async function postApi(mqtt_key,aio_key,data){
-    var linkAPI = `https://io.adafruit.com/api/v2/${mqtt_key}/data.json?X-AIO-Key=${aio_key}`;
-    fetch(linkAPI,{
-        method : 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(data)
-    }) ;
-};
 
-async function getApi(mqtt_key,aio_key){
-    var linkAPI = `https://io.adafruit.com/api/v2/${mqtt_key}/data.json?X-AIO-Key=${aio_key}`;
-    try{
-        let response = await fetch(linkAPI);
-        let responseJson = await response.json();
-        return responseJson[0].value;
-    }catch(error){
-        console.error(`Error is : ${error}`);
-    }
-     
-};
