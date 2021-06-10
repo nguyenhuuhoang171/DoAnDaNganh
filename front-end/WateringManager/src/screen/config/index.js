@@ -47,8 +47,13 @@ export default class index extends Component{
 
     loadStateSwitch(){
         //getKey("BBC").then( (keyBBC) => {
-            getApi("hoangnh/feeds/toggle-switch", "aio_zpPc43KdQ2oo7bsUoxu4BpiL1cZo" ).then( (result) => {  
-                this.setState( {isOn : JSON.parse(result).data} ); 
+            getApi("hoangnh/feeds/toggle-switch", "aio_zpPc43KdQ2oo7bsUoxu4BpiL1cZo" ).then( (result) => { 
+                if (String(JSON.parse(result).data) == "1"){
+                    this.setState( {isOn : true } ); 
+                }else{
+                    this.setState( {isOn : false } ); 
+                }
+                
             });
         //});
     }
@@ -62,7 +67,7 @@ export default class index extends Component{
             firestore().collection('thong_tin_may').doc("Máy 1").collection("Time").get().then( times =>{
                 let tempTime = [];
                 times.forEach(element => {
-                    tempTime.push({Id: element.id,Begin: element.get("Begin") ,End: element.get("End")});
+                    tempTime.push({Id: element.get("Id"),Begin: element.get("Begin") ,End: element.get("End")});
                 });
                 this.setState({Time : tempTime});
             });
@@ -129,7 +134,7 @@ export default class index extends Component{
                                                         placeholderTextColor={"gray"}
                                                         onChangeText={(text) => {
                                                                 let textNum = Number(text);
-                                                                textNum = textNum<0 ? 0 : textNum>1023 ? 1023 : textNum;
+                                                                //textNum = textNum<0 ? 0 : textNum>1023 ? 1023 : textNum;
                                                                 this.setState({Min:String(textNum)});
                                                                 this.document.update({
                                                                     Min: textNum
@@ -148,7 +153,7 @@ export default class index extends Component{
                                                         placeholderTextColor={"gray"}
                                                         onChangeText={(text)=>{
                                                             let textNum = Number(text);
-                                                            textNum = textNum<0 ? 0 : textNum>1023 ? 1023 : textNum<this.state.Min ? this.state.Min :textNum;
+                                                            //textNum = textNum<0 ? 0 : textNum>1023 ? 1023 : textNum<this.state.Min ? this.state.Min :textNum;
                                                             this.setState({Max:String(textNum)});
                                                             this.document.update({
                                                                 Max: textNum
@@ -199,8 +204,15 @@ export default class index extends Component{
                                                             value={childtime.Begin}
                                                             style={styles.timetext}
                                                             placeholderTextColor={"gray"}
-                                                            
-
+                                                            onChangeText={(text)=>{
+                                                                
+                                                                let _time = this.state.Time.map( (ctime) =>{
+                                                                    if(ctime.Id == childtime.Id){ctime.Begin = text };
+                                                                    return ctime;
+                                                                });
+                                                                this.setState({Time : _time});
+                                                                firestore().collection('thong_tin_may').doc("Máy 1").collection("Time").doc(String(childtime.Id)).update({Begin : text});
+                                                            }}
                                                         />
                                                     </View>
                                                     <Text style={{color:"white",fontSize:28,marginLeft:8}}>-</Text>
@@ -210,7 +222,14 @@ export default class index extends Component{
                                                             value={childtime.End}
                                                             style={styles.timetext}
                                                             placeholderTextColor={"gray"}
-
+                                                            onChangeText={(text)=>{
+                                                                let _time = this.state.Time.map( (ctime) =>{
+                                                                    if(ctime.Id == childtime.Id){ctime.End = text };
+                                                                    return ctime;
+                                                                });
+                                                                this.setState({Time : _time});
+                                                                firestore().collection('thong_tin_may').doc("Máy 1").collection("Time").doc(String(childtime.Id)).update({End : text});
+                                                            }}
                                                         />
                                                     </View>
                                                 </View>   

@@ -4,7 +4,8 @@ import{
     Text,
     ScrollView,
     BackHandler,
-    Alert
+    Alert,
+    RefreshControl
 } from 'react-native'
 import {styles} from './style'
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
@@ -17,6 +18,7 @@ export default class index extends Component{
     constructor (props){
         super(props);
         this.state = ({
+            refreshing: false,
             moisture : 0,
             temperature : 0
         });
@@ -45,20 +47,21 @@ export default class index extends Component{
 
     loadMoisture(){
         //getKey("BBC").then( (keyBBC) => {
-            getApi("CSE_BBC/feeds/bk-iot-soil", "" ).then( (result) => {  
-                this.setState( {moisture : JSON.parse(result).data} ); 
-            });
+            getApi("hoangnh/feeds/soil-moisture", "aio_zpPc43KdQ2oo7bsUoxu4BpiL1cZo" ).then( (result) => {  
+                this.setState( {moisture : Number(JSON.parse(result).data)} ); 
+            }).then( () => {
+                this.checkMinMax();
+            })
         //});
-        this.checkMinMax();
     }
 
     loadTemp(){
         //getKey("BBC").then( ( keyBBC) => {
-            getApi("CSE_BBC/feeds/bk-iot-temp-humid", "" ).then( (result) => {
+            getApi("hoangnh/feeds/temperature", "aio_zpPc43KdQ2oo7bsUoxu4BpiL1cZo" ).then( (result) => {
                 var temp_humid = JSON.parse(result).data;
                 var i = temp_humid.indexOf("-");
                 var temp = temp_humid.slice(0,i);
-                this.setState( {temperature : temp} ); 
+                this.setState( {temperature : Number(temp)} ); 
             });
         //});
         
@@ -66,18 +69,26 @@ export default class index extends Component{
 
     checkMinMax(){
         firestore().collection('thong_tin_may').doc("Máy 1").get().then( (doc) =>{
-            if ( doc.get("Min") > this.state.moisture ){
-                //bơm
+            //console.log(doc.get("Min") + " " + Number(doc.get("Max")) + " " + Number(this.state.moisture) );
+            if( Number(doc.get("Min")) > Number(this.state.moisture) ){
+                // bật máy bơm
+                postApi("hoangnh/feeds/toggle-switch","aio_zpPc43KdQ2oo7bsUoxu4BpiL1cZo",{value:"{ \"id\":\"11\", \"name\":\"RELAY\", \"data\":\"1\", \"unit\":\"\" }"});
             }
-            if(doc.get("Max") < this.state.moisture){
+            if( Number(doc.get("Max")) < Number(this.state.moisture) ){
                 // tắt máy bơm
+                postApi("hoangnh/feeds/toggle-switch","aio_zpPc43KdQ2oo7bsUoxu4BpiL1cZo",{value:"{ \"id\":\"11\", \"name\":\"RELAY\", \"data\":\"0\", \"unit\":\"\" }"});
             }
         });
+    }
+    _onRefresh(){
+        this.setState({refreshing: true});
+        this.componentDidMount();
+        this.setState({refreshing: false});
     }
 
     render(){
         return(
-            <ScrollView style={styles.container}>
+            <ScrollView style={styles.container} refreshControl={<RefreshControl refreshing={this.state.refreshing} onRefresh={this._onRefresh.bind(this)} /> }>
                 <View style={styles.panel}>
                     <Text style={styles.title}> Máy bơm 1</Text>
                     <View style={styles.row}>
@@ -113,7 +124,7 @@ export default class index extends Component{
                     </View>
                     <View style={styles.row}>
                         <Text style={styles.text}>Độ ẩm: 
-                                <Text> {this.state.moisture} %</Text>
+                                <Text> {this.state.moisture} </Text>
                             </Text>
                         <AnimatedCircularProgress
                             size={120}
@@ -127,7 +138,7 @@ export default class index extends Component{
                             backgroundWidth={6}>
                             {()=>(
                                 <View style={{justifyContent:"center", alignItems:"center"}}>
-                                    <Text style={{fontSize:20}}> {this.state.moisture} %</Text>
+                                    <Text style={{fontSize:20}}> {this.state.moisture}</Text>
                                 </View>
                                 )
                             }
