@@ -10,6 +10,7 @@ import {Picker} from '@react-native-picker/picker';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import {getApi, postApi,getKey} from '../index.js'
 
 export default class index extends Component{
     state={

@@ -5,6 +5,7 @@ import{
     TouchableOpacity,
     ScrollView,
     TextInput,
+    RefreshControl
 } from 'react-native'
 import {styles} from './style'
 import Ionicons from 'react-native-vector-icons/Ionicons'
@@ -19,6 +20,7 @@ export default class index extends Component{
         super(props);
         this.document = firestore().collection('thong_tin_may').doc("Máy 1");
         this.state = ({
+            refreshing: false,
             Tabfocused:"Auto",
             isOn:false,
             Name:"Máy 1",
@@ -43,7 +45,6 @@ export default class index extends Component{
     componentDidMount() {
         this.loadStateSwitch();
         this.loadDataFireBase();
-        
     }   
 
     loadStateSwitch(){
@@ -90,25 +91,11 @@ export default class index extends Component{
         })
     }
 
-    checkTime(){
-        var cur_hour = new Date().getHours();
-        var cur_min = new Date().getMinutes();;
-        var current_time = new Date();
-        current_time.setHours(cur_hour,cur_min);  
-        console.log(current_time);    
-        this.state.Time.forEach( iTime => {
-            var begin = new Date();
-            var end = new Date();
-            begin.setHours(iTime.Begin.split(":")[0] ,iTime.Begin.split(":")[1]);
-            end.setHours(iTime.End.split(":")[0] ,iTime.End.split(":")[1]);
-            if( begin<= current_time && current_time<=end){
-                //postApi("hoangnh/feeds/toggle-switch","aio_zpPc43KdQ2oo7bsUoxu4BpiL1cZo",{value:"{ \"id\":\"11\", \"name\":\"RELAY\", \"data\":\"1\", \"unit\":\"\" }"});
-                console.log("Bat mau bom" + iTime.End + ":" + iTime.Begin);
-            }
-        });
-        
+    _onRefresh(){
+        this.setState({refreshing: true});
+        this.componentDidMount();
+        this.setState({refreshing: false});
     }
-
     
     render(){
         
@@ -149,7 +136,9 @@ export default class index extends Component{
                         </TouchableOpacity>
                     </View>
                     <ScrollView
-                        style={styles.ListView}> 
+                        style={styles.ListView}
+                        refreshControl={<RefreshControl refreshing={this.state.refreshing} onRefresh={this._onRefresh.bind(this)} />}
+                        > 
                         {this.state.Tabfocused=="Auto"?
                                     <View 
                                         style={styles.viewdetail}
