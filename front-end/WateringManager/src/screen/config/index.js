@@ -39,11 +39,12 @@ export default class index extends Component{
             ]          
         });
     }
-    
+
     componentDidMount() {
         this.loadStateSwitch();
         this.loadDataFireBase();
-    }
+        
+    }   
 
     loadStateSwitch(){
         //getKey("BBC").then( (keyBBC) => {
@@ -59,7 +60,13 @@ export default class index extends Component{
     }
 
     loadDataFireBase(){
-        this.document.get().then( (doc) =>{
+        this.document.get()
+        .then( (doc) =>{
+            var cur_hour = new Date().getHours();
+            var cur_min = new Date().getMinutes();;
+            var current_time = new Date();
+            current_time.setHours(cur_hour,cur_min);
+
             this.setState( {
                 Min : doc.get("Min"),
                 Max : doc.get("Max")
@@ -67,14 +74,44 @@ export default class index extends Component{
             firestore().collection('thong_tin_may').doc("Máy 1").collection("Time").get().then( times =>{
                 let tempTime = [];
                 times.forEach(element => {
-                    tempTime.push({Id: element.get("Id"),Begin: element.get("Begin") ,End: element.get("End")});
+                    var begin_data = element.get("Begin");
+                    var end_data = element.get("End");
+                    tempTime.push({Id: element.id,Begin: begin_data ,End: end_data});
+                    var begin = new Date();
+                    var end = new Date();
+                    begin.setHours(begin_data.split(":")[0] ,begin_data.split(":")[1]);
+                    end.setHours(end_data.split(":")[0] ,end_data.split(":")[1]);
+                    if( begin<= current_time && current_time<=end){
+                        postApi("hoangnh/feeds/toggle-switch","aio_zpPc43KdQ2oo7bsUoxu4BpiL1cZo",{value:"{ \"id\":\"11\", \"name\":\"RELAY\", \"data\":\"1\", \"unit\":\"\" }"});
+                    }
                 });
                 this.setState({Time : tempTime});
             });
-        });
+        })
     }
 
+    checkTime(){
+        var cur_hour = new Date().getHours();
+        var cur_min = new Date().getMinutes();;
+        var current_time = new Date();
+        current_time.setHours(cur_hour,cur_min);  
+        console.log(current_time);    
+        this.state.Time.forEach( iTime => {
+            var begin = new Date();
+            var end = new Date();
+            begin.setHours(iTime.Begin.split(":")[0] ,iTime.Begin.split(":")[1]);
+            end.setHours(iTime.End.split(":")[0] ,iTime.End.split(":")[1]);
+            if( begin<= current_time && current_time<=end){
+                //postApi("hoangnh/feeds/toggle-switch","aio_zpPc43KdQ2oo7bsUoxu4BpiL1cZo",{value:"{ \"id\":\"11\", \"name\":\"RELAY\", \"data\":\"1\", \"unit\":\"\" }"});
+                console.log("Bat mau bom" + iTime.End + ":" + iTime.Begin);
+            }
+        });
+        
+    }
+
+    
     render(){
+        
         return(
             <View style={styles.container}>
                 <View style={styles.panel}>
