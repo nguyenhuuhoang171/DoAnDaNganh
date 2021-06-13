@@ -17,7 +17,6 @@ export default class index extends Component{
         Name:"",
         Email: "",
         Area:"",
-        Id:""
     }
 
     componentDidMount(){
@@ -25,20 +24,22 @@ export default class index extends Component{
     }
 
     loadData(){
-        firestore().collection('thong_tin_nguoi_dung').get().then( (datas) => {
-            datas.forEach( element => {
-                this.setState({
-                    Name: element.get("Name"),
-                    Area: element.get("Area"),
-                    Id: element.id
-                });
+        this.loadEmail().then( () => {
+            firestore().collection('thong_tin_nguoi_dung').get().then( (datas) => {
+                datas.forEach( element => {
+                    if ( element.id == this.state.Email){
+                        this.setState({
+                            Name: element.get("Name"),
+                            Area: element.get("Area"),
+                        });
+                    }
+                    
+                })
+                
             })
-            
-        }).then( () => {
-            this.loadEmail();
-        });
-        
+        })
     }
+    
     async loadEmail(){
         var e = await AsyncStorage.getItem("email_used");
         if (e != null){
@@ -58,7 +59,6 @@ export default class index extends Component{
                     <Text style={styles.text}>Họ và Tên: <Text>{this.state.Name}</Text></Text>
                     <Text style={styles.text}>Email: <Text>{this.state.Email}</Text></Text>
                     <Text style={styles.text}>Khu vực: <Text>{this.state.Area}</Text></Text>
-                    <Text style={styles.text}>Id: <Text>{this.state.Id}</Text></Text>
                 </View>
                 <TouchableOpacity
                     style={styles.button}

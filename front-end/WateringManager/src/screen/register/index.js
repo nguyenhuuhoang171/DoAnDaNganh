@@ -9,7 +9,7 @@ import{
     Alert
 } from 'react-native'
 import auth from '@react-native-firebase/auth';
-
+import firestore from '@react-native-firebase/firestore';
 
 export default class index extends Component{
     constructor(props){
@@ -19,14 +19,7 @@ export default class index extends Component{
             password: "",
             name:"",
             area:"",
-            id:""
         };
-    }
-
-    signup(){
-        //auth().createUserWithEmailAndPassword(String(this.state.email),String(this.state.password) ).then( () =>{
-            Alert.alert("Sign up successful !");
-        //});
     }
 
     render(){
@@ -65,11 +58,25 @@ export default class index extends Component{
                     onChangeText={text => this.setState({area:text})}
                     />
                 </View>
-                <TouchableOpacity style={styles.signupBtn} onPress={this.signup}>
+                <TouchableOpacity style={styles.signupBtn} onPress={this.signup.bind(this)}>
                     <Text style={styles.signupText}>Đăng ký</Text>
                 </TouchableOpacity>
             </View>
         )
+    }
+
+    signup(){
+        console.log(this.state.email + " " +this.state.password );
+        auth().createUserWithEmailAndPassword(this.state.email,this.state.password )
+        .then( () => {
+            firestore().collection("thong_tin_nguoi_dung").doc(this.state.email).set({
+                Name: this.state.name,
+                Area: this.state.area
+            })
+        })
+        .then( () =>{
+            Alert.alert("Sign up successful !");
+        });
     }
 }
 
