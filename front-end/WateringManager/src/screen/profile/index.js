@@ -8,13 +8,32 @@ import{
 } from 'react-native'
 import {styles} from './style'
 import AntDesign from 'react-native-vector-icons/AntDesign'
+import firestore from '@react-native-firebase/firestore';
 
 export default class index extends Component{
     state={
-        Name:"Nguyen  Van A",
-        Area:"Thành phố Hồ Chí Minh",
-        Id:"0123456789"
+        Name:"",
+        Area:"",
+        Id:""
     }
+
+    componentDidMount(){
+        this.loadData();
+    }
+
+    loadData(){
+        firestore().collection('thong_tin_nguoi_dung').get().then( (datas) => {
+            datas.forEach( element => {
+                this.setState({
+                    Name: element.get("Name"),
+                    Area: element.get("Area"),
+                    Id: element.id
+                });
+            })
+            
+        });
+    }
+
     render(){
         return(
             <ScrollView style={styles.container}>
