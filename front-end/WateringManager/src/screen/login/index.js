@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
 import {styles} from './style';
-import { Text, View, TextInput, TouchableOpacity, Alert } from "react-native";
+import { Text, View, TextInput, TouchableOpacity, Alert,AsyncStorage } from "react-native";
 import Authenticate from '../../model/login';
 import auth from '@react-native-firebase/auth';
 
@@ -10,6 +10,7 @@ export default class index extends Component{
         password: "",
         _auth: 0
     }
+
     render(){
         return(
             <View style={styles.container}>
@@ -49,6 +50,7 @@ export default class index extends Component{
 
     login = (_auth) => {
         if(_auth === 1){
+            AsyncStorage.setItem("email_used",this.state.email)
             this.props.navigation.navigate('BottomTabs');
         }
         else{
@@ -78,6 +80,10 @@ export default class index extends Component{
                 if (error.code === 'auth/invalid-email') {
                 console.log('That email address is invalid!');
                 }
+
+                if (error.code === 'auth/invalid-password') {
+                    console.log('That password is invalid!');
+                    }
             });
         }
     }

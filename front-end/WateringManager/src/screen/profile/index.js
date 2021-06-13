@@ -4,15 +4,18 @@ import{
     Text,
     Image,
     ScrollView,
-    TouchableOpacity
+    TouchableOpacity,
+    AsyncStorage
 } from 'react-native'
 import {styles} from './style'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import firestore from '@react-native-firebase/firestore';
 
+
 export default class index extends Component{
     state={
         Name:"",
+        Email: "",
         Area:"",
         Id:""
     }
@@ -31,7 +34,16 @@ export default class index extends Component{
                 });
             })
             
+        }).then( () => {
+            this.loadEmail();
         });
+        
+    }
+    async loadEmail(){
+        var e = await AsyncStorage.getItem("email_used");
+        if (e != null){
+            this.setState({Email : e });
+        }
     }
 
     render(){
@@ -44,6 +56,7 @@ export default class index extends Component{
                         style={styles.image}
                     />
                     <Text style={styles.text}>Họ và Tên: <Text>{this.state.Name}</Text></Text>
+                    <Text style={styles.text}>Email: <Text>{this.state.Email}</Text></Text>
                     <Text style={styles.text}>Khu vực: <Text>{this.state.Area}</Text></Text>
                     <Text style={styles.text}>Id: <Text>{this.state.Id}</Text></Text>
                 </View>
