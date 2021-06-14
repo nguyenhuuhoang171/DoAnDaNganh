@@ -62,13 +62,14 @@ export default class index extends Component{
                 </View>
                 <TouchableOpacity
                     style={styles.button}
+                    onPress={()=>this.props.navigation.navigate("Login")}
                 >
                     <AntDesign
                         name="logout"
                         size={30}
                         color="red"
                     />
-                    <Text style={styles.textOut} > Đăng xuất</Text>
+                    <Text style={styles.textOut}> Đăng xuất</Text>
                 </TouchableOpacity>
             </ScrollView>
         )
